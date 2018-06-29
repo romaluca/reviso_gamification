@@ -1,0 +1,221 @@
+﻿@model GameRev.Models.GoalModel
+
+@{
+    ViewBag.Title = "Create";
+
+
+}
+
+<h2>Create</h2>
+
+
+<div>
+
+    <a class="btn btn-default" href="@Url.Action("Index", "Goals")"
+       data-toggle="tooltip" title="Back to List">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+    </a>
+    <a class="btn btn-default" onclick="$('form').submit()"
+       data-toggle="tooltip" title="Save">
+        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+    </a>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="form-horizontal">
+        <hr />
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.NAME, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NAME, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NAME, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.DESCR, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10 ">
+                @Html.EditorFor(model => model.DESCR, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DESCR, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.USR_ID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.USR_ID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.USR_ID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.USR_GROUP_ID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.USR_GROUP_ID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.USR_GROUP_ID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.USR_TYPE_ID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.USR_TYPE_ID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.USR_TYPE_ID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.FORMULA_TARGET, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FORMULA_TARGET, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FORMULA_TARGET, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.NOTIFICATION_TYPE, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NOTIFICATION_TYPE, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NOTIFICATION_TYPE, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.LabelFor(model => model.NOTIFICATION_IMAGE, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NOTIFICATION_IMAGE, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NOTIFICATION_IMAGE, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group col-md-12" style="z-index:-1;">
+            <hr />
+        </div>
+        <div class="form-group col-md-12">
+
+            <div class="panel panel-default ">
+                <div class="panel-heading">
+                    Regole
+                </div>
+                <div class="panel-body ">
+                    <a class="btn btn-default" href="#" onclick="addRow()"
+                       data-toggle="tooltip" title="Add">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </a>
+                </div>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Titolo
+                            </th>
+                            <th>
+                                Livello
+                            </th>
+                            <th>
+                                Formula
+                            </th>
+                            <th>
+                                Messaggio
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbRULES">
+
+                        @if (Model != null)
+                        {
+                            for (int i = 0; i < Model.RULES.Count(); i++)
+                            {
+                                string trId = "trRule" + i;
+                                <tr id="@trId">
+                                    <td>
+                                        @Html.EditorFor(m => Model.RULES.ToList()[i].ACHIEVEMENT_TITLE, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(m => Model.RULES.ToList()[i].ACHIEVEMENT_TITLE, "", new { @class = "text-danger" })
+                                    </td>
+                                    <td>
+                                        @Html.EditorFor(m => Model.RULES.ToList()[i].GOAL_LEVEL, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(m => Model.RULES.ToList()[i].GOAL_LEVEL, "", new { @class = "text-danger" })
+                                    </td>
+                                    <td>
+                                        @Html.EditorFor(m => Model.RULES.ToList()[i].FORMULA, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(m => Model.RULES.ToList()[i].FORMULA, "", new { @class = "text-danger" })
+                                    </td>
+                                    <td>
+                                        @Html.EditorFor(m => Model.RULES.ToList()[i].ACHIEVEMENT_MESSAGE, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(m => Model.RULES.ToList()[i].ACHIEVEMENT_MESSAGE, "", new { @class = "text-danger" })
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-default" href="#" onclick="removeRow(@i)" data-toggle="tooltip" title="Delete"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>                                        </a>
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+
+
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+        <br />
+
+        @if (Model == null)
+        {
+            <input id="RuleCount" class="hidden" type="number" value="0" />
+        }
+        else
+        {
+
+
+            Model.RULES.ToList().Add(new GameRev.Models.GoalRuleModel());
+
+            <input id="RuleCount" class="hidden" type="number" value="@Model.RULES.Count()" />
+        }
+
+    </div>
+}
+
+
+<script language="javascript" type="text/javascript">
+        function addRow() {
+
+            @{
+                Model.RULES.ToList().Add(new GameRev.Models.GoalRuleModel());
+            }
+
+            var count = $("#RuleCount").val();
+            var index = parseInt(count)
+            $("#RuleCount").val(index + 1);
+
+            var titleCell = "<td><input class='form-control text-box single-line' id='RULES_" + index + "__Title' name ='RULES[" + index + "].ACHIEVEMENT_TITLE' type='text' value='' /><span class='field-validation-valid text-danger' data-valmsg-replace='true' data-valmsg-for='["+index+"].ACHIEVEMENT_TITLE'></span></td>";
+            var goalLevel = "<td><input class='form-control text-box single-line' id='RULES_" + index + "__GOAL_LEVEL' name = 'RULES[" + index + "].GOAL_LEVEL' type= 'text' value= '' /><span class='field-validation-valid text-danger' data-valmsg-replace='true' data-valmsg-for='[" + index +"].GOAL_LEVEL'></span></td > ";
+            var formula = "<td><input  class='form-control text-box single-line' id='RULES_" + index + "__FORMULA' name = 'RULES[" + index + "].FORMULA' type= 'text' value= '' /><span class='field-validation-valid text-danger' data-valmsg-replace='true' data-valmsg-for='[" + index +"].FORMULA'></span></td > ";
+            var msg = "<td><input class='form-control text-box single-line' id='RULES_" + index + "__ACHIEVEMENT_MESSAGE' name = 'RULES[" + index + "].ACHIEVEMENT_MESSAGE' type= 'text' value= '' /><span class='field-validation-valid text-danger' data-valmsg-replace='true' data-valmsg-for='[" + index +"].ACHIEVEMENT_MESSAGE'></span></td > ";
+
+            var removeCell = "<td><a class='btn btn-default' href='#' onclick='removeRow("+index+")' data-toggle='tooltip' title='Delete'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></td>";
+
+            var newRow = "<tr id='trRule" + index + "'>" + titleCell + goalLevel + formula + msg + removeCell + "</tr>";
+            $("#tbRULES").append(newRow);
+        }
+
+    function removeRow(id) {
+        debugger;
+             var controlToBeRemoved = "#trRule" + id;
+            $(controlToBeRemoved).addClass('hidden');
+        }
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
